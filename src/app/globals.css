@@ -52,8 +52,15 @@ e:
 body {
   color: black;
   background: #f2f3f6;
-  font-family: "TBC Sailec", Inter, system-ui, -apple-system, Segoe UI, Roboto,
-    Arial, sans-serif;
+  font-family:
+    "TBC Sailec",
+    Inter,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
 }
 
 @layer utilities {

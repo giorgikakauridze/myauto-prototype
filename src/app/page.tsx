@@ -1,6 +1,6 @@
 import BreadCrumps from "@/components/breadcrump";
-import VehicleFilterCard from "@/components/vehicle-filter/vehicle-filter-card";
-import VehicleResults from "@/components/vehicle-results";
+import VehicleFilterCard from "@/components/vehicle/vehicle-filter-card";
+import VehicleResults from "@/components/vehicle/vehicle-results";
 import ContainerWrapper from "@/components/wrapper/container";
 import { getManufacturers } from "@/lib/car/api";
 
@@ -16,7 +16,6 @@ export default async function Page() {
         <BreadCrumps />
         <div className="mt-8 flex gap-4">
           <VehicleFilterCard allMan={allMan} />
-
           <VehicleResults allMan={allMan} />
         </div>
       </div>

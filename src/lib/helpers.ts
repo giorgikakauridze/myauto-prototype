@@ -71,21 +71,21 @@ export function parseFilters(sp: URLSearchParams) {
       sp.get("kind") === "moto"
         ? "2"
         : sp.get("kind") === "tractor"
-        ? "1"
-        : "0",
+          ? "1"
+          : "0",
     ForRent:
       sp.get("dealType") === "rent"
         ? "1"
         : sp.get("dealType") === "sell"
-        ? "0"
-        : "",
+          ? "0"
+          : "",
     Cats: sp.get("category") ?? "",
     Mans:
       manufacturer && model
         ? `${manufacturer}.${model}`
         : manufacturer
-        ? manufacturer
-        : "",
+          ? manufacturer
+          : "",
     CurrencyID: sp.get("currency") === "GEL" ? "1" : "3",
   };
 

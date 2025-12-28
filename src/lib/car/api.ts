@@ -4,7 +4,6 @@ import {
   ManTypeResponse,
   ModelResponse,
   ModelsApiResponse,
-  VehicleFilterValues,
   VehicleResponse,
   VehiclesApiResponse,
 } from "../../../types/types";

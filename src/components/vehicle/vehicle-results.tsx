@@ -1,33 +1,17 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { Card } from "./ui/card";
-import { SelectField } from "./ui/select-field";
+import { Card } from "../ui/card";
+import { SelectField } from "../ui/select-field";
 import { getVehicles } from "@/lib/car/api";
-import SkeletonVehicleCards from "./ui/skeleton-card";
+import SkeletonVehicleCards from "../ui/skeleton-card";
 import { useMemo, useState } from "react";
-import { ManTypeResponse } from "../../types/types";
+import { ManTypeResponse } from "../../../types/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { parseFilters } from "@/lib/helpers";
-import VehicleFilterCard from "./vehicle-filter/vehicle-filter-card";
-import { Modal } from "./ui/modal";
+import VehicleFilterCard from "./vehicle-filter-card";
+import { Modal } from "../ui/modal";
 import { FilterIcon } from "@/icons/filter-icon";
-
-const sortConfig = [
-  { value: "1", label: "თარიღი კლებადი" },
-  { value: "2", label: "თარიღი ზრდადი" },
-  { value: "3", label: "ფასი კლებადი" },
-  { value: "4", label: "ფასი ზრდადი" },
-  { value: "5", label: "გარბენი კლებადი" },
-  { value: "6", label: "გარბენი ზრდადი" },
-];
-
-const periodConfig = [
-  { value: "1h", label: "1 საათი" },
-  { value: "3h", label: "3 საათი" },
-  { value: "6h", label: "6 საათი" },
-  { value: "12h", label: "12 საათი" },
-  { value: "24h", label: "24 საათი" },
-];
+import { periodConfig, sortConfig } from "@/lib/config/filter-config";
 
 const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
   const router = useRouter();
@@ -92,7 +76,6 @@ const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
               options={periodConfig}
               value={filters.Period ?? ""}
               placeholder="პერიოდი"
-              defaultValue=""
               onChange={(e) => sortChangeHandler("period", e.target.value)}
             />
             <SelectField
