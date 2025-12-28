@@ -9,7 +9,12 @@ import Image from "next/image";
 import { ManTypeResponse, VehicleResponse } from "../../../types/types";
 import { useQuery } from "@tanstack/react-query";
 import { getModelsByManId } from "@/lib/car/api";
-import { getDaysDifference, getFuelType, shimmer } from "@/lib/helpers";
+import {
+  formatEngine,
+  getDaysDifference,
+  getFuelType,
+  shimmer,
+} from "@/lib/helpers";
 
 export function Card({
   car,
@@ -124,8 +129,7 @@ function CarSpecs({
           <div className="flex items-center gap-2">
             <EngineIcon />
             <span>
-              {engine ? (engine / 100).toString().split("").join(".") : 0}{" "}
-              {fuelType}
+              {formatEngine(engine)} {fuelType}
             </span>
           </div>
           <div className="flex items-center gap-2">

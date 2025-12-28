@@ -137,3 +137,8 @@ export function getFuelType(fuel_type_id?: number): string {
       return "ბენზინი";
   }
 }
+
+export function formatEngine(engine?: number) {
+  if (!engine) return "0.0";
+  return (engine / 1000).toFixed(1);
+}
