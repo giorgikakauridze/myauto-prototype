@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* TBC Sailec (srgb(var(--foreground-rgb))osted)
+   Put folinear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))     )e    rgb(var(--background-start-rgb));
+}r
+e:
+   - public/fonts/TBCSailec-Regular.woff2
+   - public/fonts/TBCSailec-Medium.woff2
+   - public/fonts/TBCSailec-Bold.woff2
+*/
+@font-face {
+  font-family: "TBC Sailec";
+  src: url("/fonts/TBCSailec-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TBC Sailec";
+  src: url("/fonts/TBCSailec-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TBC Sailec";
+  src: url("/fonts/TBCSailec-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  color: black;
+  background: #f2f3f6;
+  font-family: "TBC Sailec", Inter, system-ui, -apple-system, Segoe UI, Roboto,
+    Arial, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
