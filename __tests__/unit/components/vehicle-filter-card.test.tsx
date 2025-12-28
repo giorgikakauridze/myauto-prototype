@@ -127,7 +127,7 @@ describe("VehicleFilterCard", () => {
 
     expect(push).not.toHaveBeenCalled();
     expect(
-      screen.getByText("Price From must be less than or equal to Price To")
+      screen.getByText("საწყისი ფასი უნდა იყოს მაქსიმალურ ფასზე ნაკლები")
     ).toBeInTheDocument();
   });
 });
