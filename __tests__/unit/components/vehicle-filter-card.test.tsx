@@ -95,4 +95,39 @@ describe("VehicleFilterCard", () => {
     expect(params.get("kind")).toBe("car");
     expect(params.get("dealType")).toBe("sell");
   });
+
+  test("blocks submit when price range is invalid (from > to)", async () => {
+    const user = userEvent.setup();
+
+    useQueryMock.mockImplementation(({ queryKey }: any) => {
+      if (queryKey?.[0] === "categories") {
+        return { data: [], isLoading: false };
+      }
+      return { data: undefined, isLoading: false };
+    });
+
+    render(
+      <VehicleFilterCard
+        allMan={[
+          {
+            man_id: "1",
+            man_name: "Toyota",
+            is_car: "1",
+            is_spec: "0",
+            is_moto: "0",
+          },
+        ]}
+      />
+    );
+
+    await user.type(screen.getByPlaceholderText("დან"), "2000");
+    await user.type(screen.getByPlaceholderText("მდე"), "1000");
+
+    await user.click(screen.getByRole("button", { name: "ძებნა" }));
+
+    expect(push).not.toHaveBeenCalled();
+    expect(
+      screen.getByText("Price From must be less than or equal to Price To")
+    ).toBeInTheDocument();
+  });
 });

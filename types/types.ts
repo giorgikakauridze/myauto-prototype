@@ -3,7 +3,7 @@ export type Currency = "GEL" | "USD";
 
 export type VehicleFilterValues = {
   kind: VehicleKind;
-  dealType: string;
+  dealType: "sell" | "rent";
   model: string;
   category: string;
   manufacturer: string;

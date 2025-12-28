@@ -3,12 +3,15 @@
 import { getCategories, getModelsByManId } from "@/lib/car/api";
 import { cn, filterCategoryByKind, filterMansByKind } from "@/lib/helpers";
 import { useQuery } from "@tanstack/react-query";
+import type { Resolver } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { ManTypeResponse, VehicleFilterValues } from "../../../types/types";
 import { SelectField } from "../ui/select-field";
 import { CurrencyToggle } from "./filter-currency-toggle";
 import VehicleTabs from "./vehicle-kind-tabs";
 import { useRouter, useSearchParams } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { vehicleFilterSchema } from "@/lib/validation/vehicle-filter";
 
 const DEFAULT_VALUES: VehicleFilterValues = {
   kind: "car",
@@ -37,6 +40,7 @@ export default function VehicleFilterCard({
   const form = useForm<VehicleFilterValues>({
     defaultValues: { ...DEFAULT_VALUES, ...initialValues },
     mode: "onChange",
+    resolver: zodResolver(vehicleFilterSchema) as Resolver<VehicleFilterValues>,
   });
 
   const manufacturerId = form.watch("manufacturer")?.toString() ?? null;
@@ -175,6 +179,13 @@ export default function VehicleFilterCard({
                   {...form.register("priceTo")}
                 />
               </div>
+              {(form.formState.errors.priceFrom ||
+                form.formState.errors.priceTo) && (
+                <div className="mt-2 text-xs text-red-600">
+                  {form.formState.errors.priceFrom?.message ||
+                    form.formState.errors.priceTo?.message}
+                </div>
+              )}
             </div>
           </div>
 
