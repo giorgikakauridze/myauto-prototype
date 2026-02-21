@@ -86,7 +86,7 @@ export default function VehicleFilterCard({
 
   return (
     <div
-      className={`w-full  ${
+      className={`w-full ${
         !isModal ? "max-w-[250px] hidden md:block" : "md:hidden"
       }`}
     >
@@ -119,11 +119,7 @@ export default function VehicleFilterCard({
 
             <SelectField
               label="მოდელი"
-              disabled={
-                form.watch("manufacturer") === "" ||
-                !form.watch("manufacturer") ||
-                isModelsLoading
-              }
+              disabled={!manufacturerId || isModelsLoading}
               placeholder="ყველა მოდელი"
               registration={form.register("model")}
               options={(allModels ?? []).map((cat) => ({
@@ -145,7 +141,7 @@ export default function VehicleFilterCard({
 
             <div className="pt-4 border-t border-[#ECEEF6]">
               <div className="flex mb-5 items-center justify-between">
-                <div className="text-base  text-[#2C2E35]">ფასი</div>
+                <div className="text-base text-[#2C2E35]">ფასი</div>
                 <CurrencyToggle
                   value={currency}
                   onChange={(v) => form.setValue("currency", v)}
@@ -158,7 +154,7 @@ export default function VehicleFilterCard({
                   placeholder="დან"
                   type="number"
                   className={cn(
-                    "w-full rounded-[11px] border border-[#D8DBE2] bg-white px-4 py-3 text-sm  outline-none",
+                    "w-full rounded-[11px] border border-[#D8DBE2] bg-white px-4 py-3 text-sm outline-none",
                     "focus:border-primary focus:ring-2 focus:ring-primary/15"
                   )}
                   {...form.register("priceFrom")}
@@ -173,7 +169,7 @@ export default function VehicleFilterCard({
                   inputMode="numeric"
                   placeholder="მდე"
                   className={cn(
-                    "w-full  rounded-[11px] border border-[#D8DBE2] bg-white px-4 py-3 text-sm  outline-none",
+                    "w-full rounded-[11px] border border-[#D8DBE2] bg-white px-4 py-3 text-sm outline-none",
                     "focus:border-primary focus:ring-2 focus:ring-primary/15"
                   )}
                   {...form.register("priceTo")}
@@ -191,7 +187,7 @@ export default function VehicleFilterCard({
 
           <button
             type="submit"
-            className="mt-10 h-[32px] w-full rounded-md bg-primary text-white text-base  shadow-[0_14px_30px_rgba(253,65,0,0.25)] active:translate-y-[1px] transition"
+            className="mt-10 h-[32px] w-full rounded-md bg-primary text-white text-base shadow-[0_14px_30px_rgba(253,65,0,0.25)] active:translate-y-[1px] transition"
           >
             ძებნა
           </button>

@@ -17,7 +17,7 @@ export async function fetchData<T>(
     const res = await fetch(url, {
       ...init,
       headers: {
-        "content-type": "application/json",
+        Accept: "application/json",
         ...(init?.headers || {}),
       },
       redirect: "follow",

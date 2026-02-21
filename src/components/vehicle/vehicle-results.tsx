@@ -4,7 +4,7 @@ import { Card } from "../ui/card";
 import { SelectField } from "../ui/select-field";
 import { getVehicles } from "@/lib/car/api";
 import SkeletonVehicleCards from "../ui/skeleton-card";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ManTypeResponse } from "../../../types/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { parseFilters } from "@/lib/helpers";
@@ -24,6 +24,10 @@ const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    setPage(1);
+  }, [spString]);
+
   const {
     data: vehicles,
     isLoading,
@@ -36,10 +40,7 @@ const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
 
   if (isError) throw new Error("Failed to fetch vehicles");
 
-  const LAST_PAGE = useMemo(
-    () => vehicles?.meta?.last_page ?? 1,
-    [vehicles?.meta?.last_page]
-  );
+  const lastPage = vehicles?.meta?.last_page ?? 1;
 
   function sortChangeHandler(key: "sort" | "period", v: string) {
     const next = new URLSearchParams(searchParams.toString());
@@ -54,7 +55,7 @@ const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
       <div className="md:hidden mb-4">
         <button
           onClick={() => setOpen(true)}
-          className="h-10 px-4 border-black border rounded-lg bg-white  flex items-center gap-2"
+          className="h-10 px-4 border-black border rounded-lg bg-white flex items-center gap-2"
         >
           <FilterIcon />
           <span className="text-sm">ფილტრი</span>
@@ -68,8 +69,8 @@ const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
         </Modal>
       </div>
       <div className="flex flex-col gap-4 w-full">
-        <div className="flex md:flex-row flex-col  md:justify-between   md:items-center">
-          <div className="text-lg ">{vehicles?.meta?.total} განცხადება</div>
+        <div className="flex md:flex-row flex-col md:justify-between md:items-center">
+          <div className="text-lg">{vehicles?.meta?.total ?? 0} განცხადება</div>
           <div className="flex gap-2">
             <SelectField
               classNames="border-none shadow-none mr-4 md:mr-8"
@@ -114,16 +115,16 @@ const VehicleResults = ({ allMan }: { allMan: ManTypeResponse[] }) => {
             </button>
 
             <span className="px-3 py-2 text-sm opacity-70">
-              Page {page} / {LAST_PAGE}
+              Page {page} / {lastPage}
             </span>
 
             <button
               className="px-3 py-2 rounded-md border disabled:opacity-40"
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
-                setPage((p) => Math.min(LAST_PAGE, p + 1));
+                setPage((p) => Math.min(lastPage, p + 1));
               }}
-              disabled={page >= LAST_PAGE || isLoading}
+              disabled={page >= lastPage || isLoading}
             >
               Next
             </button>

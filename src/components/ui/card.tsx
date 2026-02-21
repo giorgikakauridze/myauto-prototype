@@ -36,23 +36,22 @@ export function Card({
     enabled: !!manufacturer?.man_id,
   });
 
-  /// TODO FIX
-  const carName =
-    (manufacturer?.man_name ?? "") +
-    " " +
-    (allModels?.find((m) => m.model_id.toString() === car.model_id.toString())
-      ?.model_name ?? "") +
-    (car.car_model?.length > 0 ? " " + car.car_model : "");
+  const modelName =
+    allModels?.find((m) => m.model_id.toString() === car.model_id.toString())
+      ?.model_name ?? "";
+  const carName = [manufacturer?.man_name, modelName, car.car_model]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className="bg-white rounded-xl flex gap-4 shadow-sm p-4 flex-col md:flex-row">
       <div className="min-w-[178px] min-h-[256px] md:min-h-[140px] relative overflow-hidden rounded-xl">
         <Image
           src={`https://static.my.ge/myauto/photos/${car.photo}/thumbs/${car.car_id}_1.jpg?v=${car.photo_ver}`}
-          alt="Car"
+          alt={carName || "Vehicle"}
           fill
           blurDataURL={shimmer(178, 140)}
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
         />
       </div>
 
@@ -66,7 +65,7 @@ export function Card({
         year={car.prod_year}
         price={price}
         isVip={car.is_payd}
-        milleage={car.car_run_km}
+        mileage={car.car_run_km}
         engine={car.engine_volume}
         wheel={car.right_wheel ? "მარჯვენა" : "მარცხენა"}
       />
@@ -81,7 +80,7 @@ function CarSpecs({
   currency,
   isVip,
   car_order_date,
-  milleage,
+  mileage,
   wheel,
   carName,
   price,
@@ -95,7 +94,7 @@ function CarSpecs({
   car_order_date?: string;
   views?: number;
   year?: number;
-  milleage?: number;
+  mileage?: number;
   engine?: number;
   wheel?: string;
   carName?: string;
@@ -107,7 +106,7 @@ function CarSpecs({
   return (
     <div className="w-full">
       {/* header */}
-      <div className="flex gap-2  justify-between w-full">
+      <div className="flex gap-2 justify-between w-full">
         <div className="space-x-2 text-sm md:text-base flex">
           <div>{carName ?? ""}</div>
           <div className="text-[#8C929B] min-w-[55px]">{year} წ</div>
@@ -124,7 +123,7 @@ function CarSpecs({
         </div>
       </div>
       {/* body */}
-      <div className="flex justify-between  py-6 w-full">
+      <div className="flex justify-between py-6 w-full">
         <div className="grid text-sm grid-cols-2 gap-y-4 gap-x-10 lg:gap-x-24">
           <div className="flex items-center gap-2">
             <EngineIcon />
@@ -134,20 +133,20 @@ function CarSpecs({
           </div>
           <div className="flex items-center gap-2">
             <SpeedIcon />
-            <span>{milleage ?? 0} კმ</span>
-          </div>{" "}
+            <span>{mileage ?? 0} კმ</span>
+          </div>
           <div className="flex items-center gap-2">
             <AutomaticIcon />
             <span>ავტომატიკა</span>
-          </div>{" "}
+          </div>
           <div className="flex items-center gap-2">
             <SacheIcon />
             <span>{wheel}</span>
           </div>
         </div>
-        <div className="text-2xl flex items-center  gap-1">
-          <span>{Math.floor(price ?? 0)?.toLocaleString()}</span>
-          <span className="text-sm  bg-[#f2f3f6] rounded-full px-2 py-1">
+        <div className="text-2xl flex items-center gap-1">
+          <span>{Math.floor(price ?? 0).toLocaleString()}</span>
+          <span className="text-sm bg-[#f2f3f6] rounded-full px-2 py-1">
             {currency === "1" ? "₾" : "$"}
           </span>
         </div>
@@ -162,7 +161,7 @@ function CarSpecs({
             </span>
           ) : null}
           <span>{views} ნახვა</span>
-          <span className="bg-[#8C929B] w-1 h-1 rounded-full " />
+          <span className="bg-[#8C929B] w-1 h-1 rounded-full" />
           <span>{daysAgo} დღის წინ</span>
         </div>
         <div className="text-[#8C929B] flex items-center gap-4">

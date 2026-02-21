@@ -1,10 +1,14 @@
-import { CategoryResponse, ManTypeResponse } from "../../types/types";
+import {
+  CategoryResponse,
+  ManTypeResponse,
+  VehicleKind,
+} from "../../types/types";
 
 export function cn(...classes: Array<string | false | undefined | null>) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function filterMansByKind(kind: string, models: ManTypeResponse[]) {
+export function filterMansByKind(kind: VehicleKind, models: ManTypeResponse[]) {
   switch (kind) {
     case "car":
       return models.filter((model) => model.is_car === "1");
@@ -19,7 +23,7 @@ export function filterMansByKind(kind: string, models: ManTypeResponse[]) {
 }
 
 export function filterCategoryByKind(
-  kind: string,
+  kind: VehicleKind,
   categories: CategoryResponse[]
 ) {
   switch (kind) {
@@ -86,7 +90,7 @@ export function parseFilters(sp: URLSearchParams) {
         : manufacturer
           ? manufacturer
           : "",
-    CurrencyID: sp.get("currency") === "GEL" ? "1" : "3",
+    CurrencyID: sp.get("currency") === "USD" ? "3" : "1",
   };
 
   return Object.fromEntries(
@@ -139,6 +143,6 @@ export function getFuelType(fuel_type_id?: number): string {
 }
 
 export function formatEngine(engine?: number) {
-  if (!engine) return "0.0";
+  if (engine == null) return "0.0";
   return (engine / 1000).toFixed(1);
 }
